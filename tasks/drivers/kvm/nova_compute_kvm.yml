@@ -30,6 +30,19 @@
     - nova-config
     - nova-kvm
 
+- name: Ignore unknown MSRs
+  copy:
+    src: kvm-ignore-msrs.conf
+    dest: /etc/modprobe.d/kvm-ignore-msrs.conf
+    owner: root
+    group: root
+    mode: 0644
+  when:
+    - nova_kvm_ignore_unknown_msrs | bool
+  tags:
+    - nova-config
+    - nova-kvm
+
 - name: Add nova user to libvirtd group
   user:
     name: "{{ nova_system_user_name }}"
